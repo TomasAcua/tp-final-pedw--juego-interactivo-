@@ -1,0 +1,1 @@
+El sitio web es un juego de aventuras basado en texto donde los jugadores toman decisiones que influyen en el desarrollo de la historia. Los jugadores se sumergen en un mundo de fantasía donde pueden explorar diferentes lugares, enfrentarse a desafíos y descubrir tesoros ocultos.
