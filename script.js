@@ -55,7 +55,7 @@ function choosePath(path) {
         var background = document.getElementById("game-background");
         switch(location) {
             case "bosque":
-                background.style.backgroundImage = "url('bosque.jpg')";
+                background.style.backgroundImage = "https://concepto.de/wp-content/uploads/2018/10/bosque2-e1539893598295.jpg";
                 break;
             case "cueva":
                 background.style.backgroundImage = "url('cueva.jpg')";
