@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Aventuras</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Juego de Aventuras</h1>
+            <nav>
+                <button id="inicio-btn">Inicio</button>
+                <button id="historia-btn">Historia</button>
+                <button id="logros-btn">Logros</button>
+                <button id="galeria-fondo-btn">Galería de Fondos</button>
+                <button id="galeria-personajes-btn">Galería de Personajes</button>
+            </nav>
+        </header>
+        <main>
+            <section id="inicio" class="active">
+                <h2>Bienvenido a la Aventura</h2>
+                <p>Sumérgete en un mundo de fantasía donde tus decisiones influirán en el desarrollo de la historia.</p>
+                <button id="nueva-aventura-btn">Nueva Aventura</button>
+                <button id="cargar-partida-btn">Cargar Partida</button>
+            </section>
+            <section id="historia">
+                <div id="texto-historia">
+                    <p>Aquí se mostrará la historia conforme avanzas en el juego...</p>
+                    <!-- Aquí puedes escribir la historia que se va a contar -->
+                </div>
+                <div id="recuadros">
+                    <div id="personaje-principal">
+                        <!-- Aquí va la imagen del personaje principal -->
+                        <img src="imagenes/guerrero.jpg" alt="Personaje Principal">
+                    </div>
+                    <div id="personajes-secundarios">
+                        <!-- Aquí van las imágenes de los personajes secundarios -->
+                    </div>
+                </div>
+                <div id="opciones">
+                    <!-- Botones de opciones que se actualizarán dinámicamente -->
+                </div>
+                <button id="retirarse-btn">Retirarse de la misión</button>
+            </section>
+            <section id="logros">
+                <h2>Logros</h2>
+                <div id="lista-logros">
+                    <!-- Aquí se mostrarán los logros desbloqueados -->
+                </div>
+            </section>
+            <section id="galeria-fondo">
+                <h2>Galería de Imágenes de Fondo</h2>
+                <div id="imagenes-fondo">
+                    <!-- Imágenes de fondo -->
+                </div>
+            </section>
+            <section id="galeria-personajes">
+                <h2>Galería de Personajes Encontrados</h2>
+                <div id="personajes-encontrados">
+                    <!-- Imágenes de personajes secundarios -->
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2024 Juego de Aventuras</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
