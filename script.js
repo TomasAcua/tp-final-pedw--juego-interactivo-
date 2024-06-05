@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const secciones = document.querySelectorAll("main section");
     const botones = document.querySelectorAll("nav button");
     const nuevaAventuraBtn = document.getElementById("nueva-aventura-btn");
-    const cargarPartidaBtn = document.getElementById("cargar-partida-btn");
     const textoHistoria = document.getElementById("texto-historia");
     const personajePrincipal = document.getElementById("personaje-principal").querySelector("img");
     const personajesSecundarios = document.getElementById("personajes-secundarios");
@@ -54,10 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
         iniciarNuevaAventura();
     });
 
-    cargarPartidaBtn.addEventListener("click", () => {
-        cargarPartida();
-    });
-
     retirarseBtn.addEventListener("click", () => {
         mostrarSeccion("inicio");
     });
@@ -72,26 +67,11 @@ document.addEventListener("DOMContentLoaded", () => {
         actualizarOpcionesIniciales();
     }
 
-    function cargarPartida() {
-        const estadoGuardado = cargarJuego();
-        if (estadoGuardado) {
-            historia = estadoGuardado.historia;
-            lugaresVisitados = new Set(estadoGuardado.lugaresVisitados);
-            personajesEncontradosSet = new Set(estadoGuardado.personajesEncontrados);
-            logros = estadoGuardado.logros;
-            magoEncontrado = estadoGuardado.magoEncontrado;
-            textoHistoria.innerHTML = `<p>${historia}</p>`;
-            mostrarSeccion("historia");
-        } else {
-            console.log("No hay partida guardada");
-        }
-    }
-
     function avanzarHistoria(opcion, fondo) {
         cambiarFondo(fondo);
         lugaresVisitados.add(fondo);
 
-        switch(opcion) {
+        switch (opcion) {
             case "aldea":
                 historia += "<br>Decides ir a la aldea. Al llegar, encuentras a unos bandidos atacando el pueblo y a un aldeano pidiendo ayuda.";
                 mostrarPersonajesSecundarios(["bandido1", "bandido2", "aldeano"]);
@@ -160,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 break;
             case "robar_pociones":
                 historia += "<br>Intentas robar las pociones del mago, pero él te maldice y te convierte en un cerdo.";
-                personajePrincipal.src = "imagenes/cerdo.jpg";
+                personajePrincipal.src = "imagenes/cerdo.avif";
                 personajePrincipal.alt = "Cerdo";
                 mostrarPersonajesSecundarios([]);
                 logros.maldicion_cerdo = true;
@@ -179,8 +159,6 @@ document.addEventListener("DOMContentLoaded", () => {
             actualizarOpcionesMago();
             magoEncontrado = true;
         }
-
-        guardarEstado();
     }
 
     function actualizarOpcionesIniciales() {
@@ -268,12 +246,14 @@ document.addEventListener("DOMContentLoaded", () => {
         lugares.forEach(lugar => {
             const item = document.createElement("div");
             item.className = "galeria-item";
-            if (!lugaresVisitados.has(lugar)) {
-                item.classList.add("hidden");
-            }
             const img = document.createElement("img");
-            img.src = `imagenes/${lugar}.jpg`;
-            img.alt = lugar;
+            if (lugaresVisitados.has(lugar)) {
+                img.src = `imagenes/${lugar}.jpg`;
+                img.alt = lugar;
+            } else {
+                img.src = "imagenes/signo_pregunta.jpg";
+                img.alt = "Signo de Pregunta";
+            }
             const p = document.createElement("p");
             p.textContent = lugar;
             item.appendChild(img);
@@ -288,12 +268,14 @@ document.addEventListener("DOMContentLoaded", () => {
         personajes.forEach(personaje => {
             const item = document.createElement("div");
             item.className = "galeria-item";
-            if (!personajesEncontradosSet.has(personaje)) {
-                item.classList.add("hidden");
-            }
             const img = document.createElement("img");
-            img.src = `imagenes/${personaje}.jpg`;
-            img.alt = personaje;
+            if (personajesEncontradosSet.has(personaje)) {
+                img.src = `imagenes/${personaje}.jpg`;
+                img.alt = personaje;
+            } else {
+                img.src = "imagenes/signo_pregunta.jpg";
+                img.alt = "Signo de Pregunta";
+            }
             const p = document.createElement("p");
             p.textContent = personaje;
             item.appendChild(img);
@@ -311,47 +293,14 @@ document.addEventListener("DOMContentLoaded", () => {
             listaLogros.appendChild(div);
         }
     }
-
     function finalizarHistoria(mensaje) {
-        historia += `<br><br>${mensaje}<br><button id="reiniciar-btn">Ver Logros</button>`;
+        historia += `<br><br>${mensaje}<br><button id="reiniciar-btn">terminar aventura</button>`;
         textoHistoria.innerHTML = `<p>${historia}</p>`;
         document.getElementById("reiniciar-btn").addEventListener("click", () => {
-            mostrarSeccion("logros");
-            actualizarLogros();
+            mostrarSeccion("inicio");
+            historia = "";
         });
     }
 
-    function guardarJuego(estado) {
-        localStorage.setItem("estadoJuego", JSON.stringify(estado));
-    }
 
-    function cargarJuego() {
-        const estadoGuardado = localStorage.getItem("estadoJuego");
-        if (estadoGuardado) {
-            return JSON.parse(estadoGuardado);
-        }
-        return null;
-    }
-
-    function guardarEstado() {
-        const estadoJuego = {
-            historia,
-            lugaresVisitados: Array.from(lugaresVisitados),
-            personajesEncontrados: Array.from(personajesEncontradosSet),
-            logros,
-            magoEncontrado
-        };
-        guardarJuego(estadoJuego);
-    }
-
-    const estadoCargado = cargarJuego();
-    if (estadoCargado) {
-        historia = estadoCargado.historia;
-        lugaresVisitados = new Set(estadoCargado.lugaresVisitados);
-        personajesEncontradosSet = new Set(estadoCargado.personajesEncontrados);
-        logros = estadoCargado.logros;
-        magoEncontrado = estadoCargado.magoEncontrado;
-        textoHistoria.innerHTML = `<p>${historia}</p>`;
-        actualizarOpcionesIniciales();
-    }
 });
