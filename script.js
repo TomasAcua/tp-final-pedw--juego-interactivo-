@@ -11,27 +11,83 @@ document.addEventListener("DOMContentLoaded", () => {
     const retirarseBtn = document.getElementById("retirarse-btn");
     const listaLogros = document.getElementById("lista-logros");
     const musicaFondo = document.getElementById("musica-fondo");
+    const musicBtn = document.getElementById("music-btn");
+    const usernameInput = document.getElementById("username-input");
+    const loginBtn = document.getElementById("login-btn");
+    const registerBtn = document.getElementById("register-btn");
+    const logoutBtn = document.getElementById("logout-btn");
+    const currentUserSpan = document.getElementById("current-user");
 
     let historia = "";
-    let lugaresVisitados = new Set();
-    let personajesEncontradosSet = new Set();
-    let logros = {
-        heroe_pueblo: false,
-        lider_bandidos: false,
-        amigo_elfos: false,
-        asesinado_aranas: false,
-        rey_reino: false,
-        devorado_dragon: false,
-        maldicion_cerdo: false
+    let usuarios = {
+        "usuario1": {
+            logros: {
+                heroe_pueblo: false,
+                lider_bandidos: false,
+                amigo_elfos: false,
+                asesinado_aranas: false,
+                rey_reino: false,
+                devorado_dragon: false,
+                maldicion_cerdo: false
+            },
+            lugaresVisitados: new Set(),
+            personajesEncontradosSet: new Set()
+        },
+        "usuario2": {
+            logros: {
+                heroe_pueblo: false,
+                lider_bandidos: false,
+                amigo_elfos: false,
+                asesinado_aranas: false,
+                rey_reino: false,
+                devorado_dragon: false,
+                maldicion_cerdo: false
+            },
+            lugaresVisitados: new Set(),
+            personajesEncontradosSet: new Set()
+        }
     };
+    let usuarioActual = null;
+    let logros, lugaresVisitados, personajesEncontradosSet;
     let magoEncontrado = false;
 
     musicaFondo.volume = 0.1;
-    musicaFondo.play();
+
+    function toggleMusic() {
+        if (musicaFondo.paused) {
+            musicaFondo.play();
+            musicBtn.textContent = "Pausar Música";
+        } else {
+            musicaFondo.pause();
+            musicBtn.textContent = "Reproducir Música";
+        }
+    }
+
+    musicBtn.addEventListener("click", toggleMusic);
 
     function mostrarSeccion(id) {
         secciones.forEach(seccion => seccion.classList.remove("active"));
         document.getElementById(id).classList.add("active");
+    }
+
+    function deshabilitarBotones() {
+        botones.forEach(boton => {
+            boton.disabled = true;
+        });
+        opciones.querySelectorAll("button").forEach(boton => {
+            boton.disabled = true;
+        });
+        retirarseBtn.disabled = true;
+    }
+
+    function habilitarBotones() {
+        botones.forEach(boton => {
+            boton.disabled = false;
+        });
+        opciones.querySelectorAll("button").forEach(boton => {
+            boton.disabled = false;
+        });
+        retirarseBtn.disabled = false;
     }
 
     botones.forEach(boton => {
@@ -71,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         cambiarFondo(fondo);
         lugaresVisitados.add(fondo);
 
-        switch (opcion) {
+        switch(opcion) {
             case "aldea":
                 historia += "<br>Decides ir a la aldea. Al llegar, encuentras a unos bandidos atacando el pueblo y a un aldeano pidiendo ayuda.";
                 mostrarPersonajesSecundarios(["bandido1", "bandido2", "aldeano"]);
@@ -140,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 break;
             case "robar_pociones":
                 historia += "<br>Intentas robar las pociones del mago, pero él te maldice y te convierte en un cerdo.";
-                personajePrincipal.src = "imagenes/cerdo.avif";
+                personajePrincipal.src = "imagenes/cerdo.jpeg";
                 personajePrincipal.alt = "Cerdo";
                 mostrarPersonajesSecundarios([]);
                 logros.maldicion_cerdo = true;
@@ -247,15 +303,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const item = document.createElement("div");
             item.className = "galeria-item";
             const img = document.createElement("img");
-            if (lugaresVisitados.has(lugar)) {
-                img.src = `imagenes/${lugar}.jpg`;
-                img.alt = lugar;
-            } else {
-                img.src = "imagenes/signo_pregunta.jpg";
-                img.alt = "Signo de Pregunta";
-            }
+            img.src = lugaresVisitados.has(lugar) ? `imagenes/${lugar}.jpg` : `imagenes/signo_pregunta.jpg`;
+            img.alt = lugar;
             const p = document.createElement("p");
-            p.textContent = lugar;
+            p.textContent = lugaresVisitados.has(lugar) ? lugar : "???";
             item.appendChild(img);
             item.appendChild(p);
             imagenesFondo.appendChild(item);
@@ -269,15 +320,10 @@ document.addEventListener("DOMContentLoaded", () => {
             const item = document.createElement("div");
             item.className = "galeria-item";
             const img = document.createElement("img");
-            if (personajesEncontradosSet.has(personaje)) {
-                img.src = `imagenes/${personaje}.jpg`;
-                img.alt = personaje;
-            } else {
-                img.src = "imagenes/signo_pregunta.jpg";
-                img.alt = "Signo de Pregunta";
-            }
+            img.src = personajesEncontradosSet.has(personaje) ? `imagenes/${personaje}.jpg` : `imagenes/signo_pregunta.jpg`;
+            img.alt = personaje;
             const p = document.createElement("p");
-            p.textContent = personaje;
+            p.textContent = personajesEncontradosSet.has(personaje) ? personaje : "???";
             item.appendChild(img);
             item.appendChild(p);
             personajesEncontrados.appendChild(item);
@@ -293,14 +339,71 @@ document.addEventListener("DOMContentLoaded", () => {
             listaLogros.appendChild(div);
         }
     }
+
     function finalizarHistoria(mensaje) {
-        historia += `<br><br>${mensaje}<br><button id="reiniciar-btn">terminar aventura</button>`;
+        historia += `<br><br>${mensaje}<br><button id="finalizar-btn">Ver Logros</button>`;
         textoHistoria.innerHTML = `<p>${historia}</p>`;
-        document.getElementById("reiniciar-btn").addEventListener("click", () => {
-            mostrarSeccion("inicio");
-            historia = "";
-        });
+        deshabilitarBotones();
+        setTimeout(() => {
+            const finalizarBtn = document.getElementById("finalizar-btn");
+            finalizarBtn.addEventListener("click", () => {
+                mostrarSeccion("logros");
+                actualizarLogros();
+                habilitarBotones();
+            });
+        }, 100); // small delay to ensure button is rendered
     }
 
+    loginBtn.addEventListener("click", () => {
+        const username = usernameInput.value.trim();
+        if (username && usuarios.hasOwnProperty(username)) {
+            usuarioActual = username;
+            logros = usuarios[usuarioActual].logros;
+            lugaresVisitados = usuarios[usuarioActual].lugaresVisitados;
+            personajesEncontradosSet = usuarios[usuarioActual].personajesEncontradosSet;
+            currentUserSpan.textContent = `Usuario Actual: ${usuarioActual}`;
+            currentUserSpan.style.display = "inline";
+            loginBtn.style.display = "none";
+            logoutBtn.style.display = "inline";
+            registerBtn.style.display = "none";
+            usernameInput.style.display = "none";
+        } else {
+            alert("Usuario no encontrado");
+        }
+    });
 
+    registerBtn.addEventListener("click", () => {
+        const username = usernameInput.value.trim();
+        if (username && !usuarios.hasOwnProperty(username)) {
+            usuarios[username] = {
+                logros: {
+                    heroe_pueblo: false,
+                    lider_bandidos: false,
+                    amigo_elfos: false,
+                    asesinado_aranas: false,
+                    rey_reino: false,
+                    devorado_dragon: false,
+                    maldicion_cerdo: false
+                },
+                lugaresVisitados: new Set(),
+                personajesEncontradosSet: new Set()
+            };
+            alert("Usuario registrado exitosamente");
+        } else {
+            alert("Nombre de usuario inválido o ya existe");
+        }
+    });
+
+    logoutBtn.addEventListener("click", () => {
+        usuarioActual = null;
+        logros = null;
+        lugaresVisitados = null;
+        personajesEncontradosSet = null;
+        currentUserSpan.style.display = "none";
+        loginBtn.style.display = "inline";
+        registerBtn.style.display = "inline";
+        logoutBtn.style.display = "none";
+        usernameInput.style.display = "inline";
+        usernameInput.value = "";
+    });
 });

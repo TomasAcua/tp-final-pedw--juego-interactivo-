@@ -17,6 +17,16 @@
                 <button id="galeria-fondo-btn">Galería de Fondos</button>
                 <button id="galeria-personajes-btn">Galería de Personajes</button>
             </nav>
+            <div id="music-control">
+                <button id="music-btn">Reproducir Música</button>
+            </div>
+            <div id="login-section">
+                <input type="text" id="username-input" placeholder="Nombre de usuario">
+                <button id="login-btn">Iniciar Sesión</button>
+                <button id="register-btn">Registrar</button>
+                <button id="logout-btn" style="display:none;">Cerrar Sesión</button>
+                <span id="current-user" style="display:none;"></span>
+            </div>
         </header>
         <main>
             <section id="inicio" class="active">
@@ -57,6 +67,7 @@
         </footer>
         <audio id="musica-fondo" loop>
             <source src="audios/musica fantasia.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
         </audio>
     </div>
     <script src="script.js"></script>
