@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desbloqueables</title>
+    <link rel="stylesheet" href="desbloqueables.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Lo que Puedes Desbloquear</h1>
+            <nav>
+                <button onclick="window.location.href='index.html'">Volver al Inicio</button>
+            </nav>
+        </header>
+        <main>
+            <section id="logros">
+                <h2>Logros</h2>
+                <div id="lista-logros">
+                    <!-- Logros se mostrarán aquí -->
+                </div>
+            </section>
+            <section id="galeria-fondo">
+                <h2>Galería de Imágenes de Fondo</h2>
+                <div id="imagenes-fondo" class="galeria">
+                    <!-- Fondos se mostrarán aquí -->
+                </div>
+            </section>
+            <section id="galeria-personajes">
+                <h2>Galería de Personajes</h2>
+                <div id="personajes-encontrados" class="galeria">
+                    <!-- Personajes se mostrarán aquí -->
+                </div>
+            </section>
+            <section id="contacto">
+                <h2>Formulario de Contacto</h2>
+                <form id="contact-form">
+                    <label for="username">Nombre de Usuario:</label>
+                    <input type="text" id="username" name="username" required>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <label for="comments">Comentarios:</label>
+                    <textarea id="comments" name="comments" required></textarea>
+                    <button type="submit">Enviar</button>
+                </form>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2024 Juego de Aventuras</p>
+        </footer>
+    </div>
+    <script src="desbloqueables.js"></script>
+</body>
+</html>

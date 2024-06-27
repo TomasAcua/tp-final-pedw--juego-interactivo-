@@ -1,0 +1,126 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: url('imagenes/fondo.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+    color: white;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav button {
+    margin: 5px;
+    padding: 10px;
+    background: #444;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+nav button:hover {
+    background: #666;
+}
+
+nav button:active {
+    background: #888;
+    color: #000;
+}
+
+main {
+    flex: 1;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+section {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.galeria {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.galeria-item {
+    width: 150px;
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.galeria-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.galeria-item p {
+    margin: 5px 0 0 0;
+}
+
+#contacto form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+#contacto label {
+    margin-bottom: 5px;
+}
+
+#contacto input, #contacto textarea {
+    width: 300px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+#contacto button {
+    padding: 10px 20px;
+    background: #444;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+#contacto button:hover {
+    background: #666;
+}
+
+#contacto button:active {
+    background: #888;
+    color: #000;
+}
+
+footer {
+    background: rgba(0, 0, 0, 0.7);
+    text-align: center;
+    padding: 10px;
+}

@@ -178,7 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 historia += "<br>Te aventuras en la cueva y logras derrotar al dragón, obteniendo su tesoro. Te conviertes en el próximo rey.";
                 personajePrincipal.src = "imagenes/heroe-rey.jpg";
                 personajePrincipal.alt = "Heroe Rey";
-                personajesEncontradosSet.add("heroe-rey");
                 mostrarPersonajesSecundarios([]);
                 logros.rey_reino = true;
                 finalizarHistoria("¡Has desbloqueado el logro de Rey del Reino!");
@@ -199,7 +198,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 historia += "<br>Intentas robar las pociones del mago, pero él te maldice y te convierte en un cerdo.";
                 personajePrincipal.src = "imagenes/cerdo.jpeg";
                 personajePrincipal.alt = "Cerdo";
-                personajesEncontradosSet.add("cerdo");
                 mostrarPersonajesSecundarios([]);
                 logros.maldicion_cerdo = true;
                 finalizarHistoria("¡Has sido maldecido y convertido en un cerdo!");
@@ -353,7 +351,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 actualizarLogros();
                 habilitarBotones();
             });
-        }, 100);
+        }, 100); 
     }
 
     loginBtn.addEventListener("click", () => {
